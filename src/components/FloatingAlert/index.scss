@@ -1,0 +1,8 @@
+@import '../../styles/components/floatingAlert.scss';
+
+.floating-alert__container {
+    position: fixed;
+    top: $floating-alert__container-top-distance !important;
+    right: 0;
+    left: 0;
+}
