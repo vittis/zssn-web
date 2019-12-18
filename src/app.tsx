@@ -9,7 +9,7 @@ import FloatingAlert from './components/FloatingAlert';
 const App: React.FC = () => {
   return (
     <>
-      <FloatingAlert />
+      {/* <FloatingAlert /> */}
       <Container>
         <Navbar />
         <Jumbotron />

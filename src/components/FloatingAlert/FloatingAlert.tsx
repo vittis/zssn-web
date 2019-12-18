@@ -5,7 +5,7 @@ import './index.scss';
 const FloatingAlert: React.FC = () => {
   return (
     <div className="fixed-top floating-alert__container">
-      <Alert color="danger" isOpen={true} toggle={() => {}}>
+      <Alert className="floating-alert__alert" color="danger" isOpen={true} toggle={() => {}}>
         Deu ruim
       </Alert>
     </div>
