@@ -5,6 +5,7 @@ import AddSurvivorForm from './components/AddSurvivorForm';
 import './index.scss';
 import api from '../../services/api';
 import SurvivorCard from './components/SurvivorCard';
+import { BlueprintRO } from '../Blueprints/Blueprints';
 
 export interface SurvivorRO {
   _id: string;
@@ -17,10 +18,18 @@ export interface SurvivorRO {
 }
 
 const Survivors: React.FC = () => {
-  const [{ data: survivors, isLoading }, refetch] = useApiRequest<SurvivorRO[]>('/survivors', []);
+  const [{ data: survivors, isLoading: survivorsLoading }, refetch] = useApiRequest<SurvivorRO[]>(
+    '/survivors',
+    [],
+  );
+  const [{ data: blueprints, isLoading: blueprintsLoading }] = useApiRequest<BlueprintRO[]>(
+    '/blueprints',
+    [],
+  );
+
   const [formOpen, setFormOpen] = useState(false);
 
-  if (isLoading) {
+  if (survivorsLoading || blueprintsLoading) {
     return (
       <div className="d-flex justify-content-center">
         <Spinner color="primary" />
@@ -47,7 +56,7 @@ const Survivors: React.FC = () => {
         </Button>
       </div>
       <Collapse isOpen={formOpen}>
-        <AddSurvivorForm onSubmit={onSubmitAddSurvivor} />
+        <AddSurvivorForm blueprints={blueprints} onSubmit={onSubmitAddSurvivor} />
       </Collapse>
       <div className="survivor-cards-container mt-4">
         {survivors.map(survivor => (

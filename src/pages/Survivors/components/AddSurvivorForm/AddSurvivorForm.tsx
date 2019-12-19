@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Row, Col, FormGroup, Label, Input, Button, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
+import { BlueprintRO } from '../../../Blueprints/Blueprints';
 
 const AddSurvivorSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
@@ -21,9 +22,33 @@ const AddSurvivorSchema = Yup.object().shape({
 
 interface AddSurvivorFormProps {
   onSubmit: (values: any) => void;
+  blueprints: BlueprintRO[];
 }
 
 const AddSurvivorForm: React.FC<AddSurvivorFormProps> = props => {
+  const { blueprints } = props;
+
+  const [items, setItems] = useState<{ id: string; quantity: number }[]>([]);
+
+  function addItems(id: string, quantity: number) {
+    if (!quantity || quantity === 0) {
+      return;
+    }
+    const item = items.find(i => i.id === id);
+    if (!item) {
+      setItems([...items, { id, quantity }]);
+    } else {
+      setItems(
+        items.filter(i => {
+          if (i.id === id) {
+            i.quantity = quantity;
+          }
+          return i;
+        }),
+      );
+    }
+  }
+
   return (
     <Formik
       validationSchema={AddSurvivorSchema}
@@ -34,7 +59,7 @@ const AddSurvivorForm: React.FC<AddSurvivorFormProps> = props => {
         try {
           setSubmitting(true);
           const { lat, lon, ...payload } = values;
-          await props.onSubmit({ ...payload, coordinates: [lat, lon], items: [] });
+          await props.onSubmit({ ...payload, coordinates: [lat, lon], items });
         } catch (err) {
           setSubmitting(false);
         }
@@ -53,7 +78,7 @@ const AddSurvivorForm: React.FC<AddSurvivorFormProps> = props => {
             <Col md={2}>
               <FormGroup>
                 <Label>Age</Label>
-                <Input tag={Field} type="tel" name="age" />
+                <Input tag={Field} type="number" name="age" />
                 <ErrorMessage className="text-danger" name="age" component="div" />
               </FormGroup>
             </Col>
@@ -75,19 +100,45 @@ const AddSurvivorForm: React.FC<AddSurvivorFormProps> = props => {
             <Col md={2}>
               <FormGroup>
                 <Label>Latitude</Label>
-                <Input tag={Field} type="tel" name="lat" />
+                <Input tag={Field} type="number" name="lat" />
                 <ErrorMessage className="text-danger" name="lat" component="div" />
               </FormGroup>
             </Col>
             <Col md={2}>
               <FormGroup>
                 <Label>Longitude</Label>
-                <Input tag={Field} type="tel" name="lon" />
+                <Input tag={Field} type="number" name="lon" />
                 <ErrorMessage className="text-danger" name="lon" component="div" />
               </FormGroup>
             </Col>
           </Row>
-          <Button disabled={isSubmitting} outline type="submit" color="primary" className="w-100">
+          <h5>Items:</h5>
+          <Row>
+            {false ? (
+              blueprints.map(blueprint => {
+                return (
+                  <Col key={blueprint._id} md={2}>
+                    <FormGroup>
+                      <Label>{blueprint.name}</Label>
+                      <Input
+                        onChange={e => addItems(blueprint._id, parseInt(e.target.value))}
+                        type="number"
+                      />
+                    </FormGroup>
+                  </Col>
+                );
+              })
+            ) : (
+              <div className="ml-3">No blueprints found...</div>
+            )}
+          </Row>
+          <Button
+            disabled={isSubmitting}
+            outline
+            type="submit"
+            color="primary"
+            className="w-100 mt-2"
+          >
             Submit
           </Button>
           {isSubmitting && (
