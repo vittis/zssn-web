@@ -5,6 +5,7 @@ import { SurvivorRO } from '../Survivors/Survivors';
 import { Spinner, Button, Collapse } from 'reactstrap';
 import UpdateSurvivorForm from './UpdateSurvivorForm';
 import api from '../../services/api';
+import ReportForm from './ReportForm';
 
 interface SurvivorDetailsRouteParams {
   survivorId: string;
@@ -24,9 +25,14 @@ const SurvivorDetails: React.FC<RouteComponentProps<SurvivorDetailsRouteParams>>
     null,
   );
   const [{ data: items }] = useApiRequest<ItemRO[] | null>(`/survivors/${survivorId}/items`, null);
+  const [{ data: survivors, isLoading: survivorsLoading }] = useApiRequest<SurvivorRO[]>(
+    '/survivors',
+    [],
+  );
   const [formOpen, setFormOpen] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
 
-  if (survivor === null || items === null) {
+  if (survivor === null || items === null || survivorsLoading) {
     return (
       <div className="d-flex justify-content-center">
         <Spinner color="primary" />
@@ -39,6 +45,16 @@ const SurvivorDetails: React.FC<RouteComponentProps<SurvivorDetailsRouteParams>>
       await api.patch(`/survivors/${survivorId}`, payload);
       await refetchSurvivor();
       setFormOpen(false);
+    } catch (err) {
+      // leave treatment to global error handling
+    }
+  }
+
+  async function onSubmitReportSurvivor(infectedId: string) {
+    try {
+      await api.post(`/survivors/${survivorId}/report-infection`, { infectedId });
+      await refetchSurvivor();
+      setReportOpen(false);
     } catch (err) {
       // leave treatment to global error handling
     }
@@ -62,14 +78,23 @@ const SurvivorDetails: React.FC<RouteComponentProps<SurvivorDetailsRouteParams>>
             Trade
           </Button>
         </Link>
-        {/* @todo */}
-        {/* <Button size="sm" onClick={() => setFormOpen(!formOpen)} color="primary" className="ml-2">
+        <Button
+          size="sm"
+          onClick={() => setReportOpen(!reportOpen)}
+          color="primary"
+          className="ml-2"
+        >
           Report
-        </Button> */}
+        </Button>
       </div>
       <Collapse isOpen={formOpen}>
         <UpdateSurvivorForm onSubmit={onSubmitUpdateSurvivor} />
       </Collapse>
+
+      <Collapse isOpen={reportOpen}>
+        <ReportForm survivors={survivors} reporter={survivor} onSubmit={onSubmitReportSurvivor} />
+      </Collapse>
+
       <div>
         Age: <span className="font-weight-bold">{survivor.age}</span>
       </div>
@@ -96,7 +121,11 @@ const SurvivorDetails: React.FC<RouteComponentProps<SurvivorDetailsRouteParams>>
         Reported by:
         <ul className="font-weight-bold mb-0">
           {survivor.reportedBy.length > 0 ? (
-            survivor.reportedBy.map(reported => <li key={reported}>{reported}</li>)
+            survivor.reportedBy.map(reported => {
+              const reportee = survivors.find(s => s._id === reported[0]);
+
+              return <li key={reported[0]}>{reportee ? reportee.name : '?'}</li>;
+            })
           ) : (
             <li>No one!</li>
           )}

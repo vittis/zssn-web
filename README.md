@@ -9,10 +9,7 @@ Foi utilizado o Create React App como ponto de partida da aplicação.
 * Estilos: [SASS](https://sass-lang.com/) e [Bootstrap 4](https://getbootstrap.com/) via [reactstrap](https://reactstrap.github.io/)
 * Cliente HTTP: [Axios](https://github.com/axios/axios)
 * Ícones: [FontAwesome](https://fontawesome.com/)
-
-### Build
-* Module bundler: [Webpack 4](https://webpack.js.org/)
-* Transpilador ES6+: [Babel 7](https://babeljs.io/)
+* [Typescript](https://www.typescriptlang.org/)
 
 ### Linter
 * [ESlint](https://eslint.org/)

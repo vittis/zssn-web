@@ -51,7 +51,7 @@ const Survivors: React.FC = () => {
       </Collapse>
       <div className="survivor-cards-container mt-4">
         {survivors.map(survivor => (
-          <SurvivorCard key={survivor._id} survivor={survivor} />
+          <SurvivorCard survivors={survivors} key={survivor._id} survivor={survivor} />
         ))}
       </div>
     </>

@@ -98,7 +98,7 @@ const Trade: React.FC<RouteComponentProps<TradeRouteParams>> = props => {
       <ul>
         {items.map(item => (
           <li key={item._id}>
-            {item.quantity} {item.item.name}
+            {item.quantity} {item.item.name} - {item.item.points} points
             <Button
               onClick={() => addItemToTrade(item, true)}
               className="ml-2"

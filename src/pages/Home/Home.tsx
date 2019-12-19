@@ -39,6 +39,7 @@ const Home: React.FC<HomeProps> = props => {
   }
   return (
     <div>
+      <h3>Reports</h3>
       <div className="cards-container mb-3">
         {/* Population Overview Card */}
         <Card className="mr-2" body>
@@ -79,6 +80,28 @@ const Home: React.FC<HomeProps> = props => {
             </Button>
           </Link>
         </Card>
+
+        {/* Items Average Card */}
+        <Card className="ml-2" body>
+          <CardTitle>
+            <h4>Items average</h4>
+          </CardTitle>
+          <ul>
+            {reports.averageResources.length > 0 ? (
+              reports.averageResources.map((resource, index) => {
+                const key = Object.getOwnPropertyNames(resource)[0];
+                return (
+                  /* Index as key because is a non mutable list */
+                  <li key={index}>
+                    {key} - {resource[key]}
+                  </li>
+                );
+              })
+            ) : (
+              <li>No items yet</li>
+            )}
+          </ul>
+        </Card>
       </div>
 
       <div className="map-container">
@@ -97,11 +120,6 @@ const Home: React.FC<HomeProps> = props => {
             />
           ))}
         </GoogleMapReact>
-      </div>
-      <div className="d-flex mt-3">
-        <Button className="w-100" outline size="sm" color="primary">
-          View full reports
-        </Button>
       </div>
     </div>
   );
