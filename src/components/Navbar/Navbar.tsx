@@ -24,6 +24,13 @@ const Navbar: React.FC = () => {
             <div className={`nav-link ${pathname === '/survivors' ? 'active' : ''}`}>Survivors</div>
           </Link>
         </NavItem>
+        <NavItem>
+          <Link className="text-decoration-none" to="/blueprints">
+            <div className={`nav-link ${pathname === '/blueprints' ? 'active' : ''}`}>
+              Blueprints
+            </div>
+          </Link>
+        </NavItem>
       </Nav>
     </MainNav>
   );

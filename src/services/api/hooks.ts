@@ -5,7 +5,7 @@ export type ApiResponse<T> = [{ data: T; isLoading: boolean; error: boolean }, (
 
 /*
  *  Data fetch custom hook
- *  Inspired from https://www.robinwieruch.de/react-hooks-fetch-data
+ *  Inspired and improved from https://www.robinwieruch.de/react-hooks-fetch-data
  */
 export function useApiRequest<T>(path: string, initialValue: T): ApiResponse<T> {
   const valueState = useState<T>(initialValue);
@@ -31,7 +31,7 @@ export function useApiRequest<T>(path: string, initialValue: T): ApiResponse<T> 
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return [{ data: value, isLoading: loading, error: error }, fetchData];
 }

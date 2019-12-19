@@ -6,12 +6,15 @@ import Footer from './components/Footer';
 import Routes from './routes';
 import FloatingAlert from './components/FloatingAlert';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { useError } from './store/ducks/error/hooks';
 
 const App: React.FC = () => {
+  const { error, clearErrors } = useError();
+
   return (
     <>
       <Router>
-        {/* <FloatingAlert /> */}
+        {error.requestError && <FloatingAlert message={error.message} clear={clearErrors} />}
         <Container>
           <Navbar />
           <Jumbotron />
