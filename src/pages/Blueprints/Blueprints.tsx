@@ -39,7 +39,7 @@ const Blueprints: React.FC = () => {
   return (
     <>
       <div className="d-flex">
-        <h3>Survivors</h3>
+        <h3>Blueprints</h3>
         <Button onClick={() => setFormOpen(!formOpen)} color="primary" className="ml-2">
           Add new
         </Button>
