@@ -14,6 +14,10 @@ API repo: [https://github.com/vittis/zssn-api](https://github.com/vittis/zssn-ap
 * Form Control: [Formik](https://jaredpalmer.com/formik/docs/overview)
 * [Typescript](https://www.typescriptlang.org/)
 
+### Tests
+* [Jest](https://jestjs.io/)
+* [Enzyme](https://airbnb.io/enzyme/)
+
 ### Linter
 * [ESlint](https://eslint.org/)
 * [Prettier](https://github.com/prettier/prettier)
