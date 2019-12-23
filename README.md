@@ -1,49 +1,52 @@
-# ZSSN - Vítor Bichara
+# Zombie Survival Social Network - Web
 
-Foi utilizado o Create React App como ponto de partida da aplicação.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Frameworks e ferramentas
-### Desenvolvimento
+API repo: [https://github.com/vittis/zssn-api](https://github.com/vittis/zssn-api)
+
+## Tech Stack
+### Devlopment
 * UI: [React](https://reactjs.org/)
-* Controle de estado: [Redux]() para estado global e [React Hooks](https://reactjs.org/docs/hooks-intro.html) para estado local
-* Estilos: [SASS](https://sass-lang.com/) e [Bootstrap 4](https://getbootstrap.com/) via [reactstrap](https://reactstrap.github.io/)
-* Cliente HTTP: [Axios](https://github.com/axios/axios)
-* Ícones: [FontAwesome](https://fontawesome.com/)
+* State Control: [Redux](https://redux.js.org/) for global state e [React Hooks](https://reactjs.org/docs/hooks-intro.html) for local state
+* Styling: [SASS](https://sass-lang.com/) and [Bootstrap 4](https://getbootstrap.com/) powered by [reactstrap](https://reactstrap.github.io/)
+* HTTP Client: [Axios](https://github.com/axios/axios)
+* Icons: [FontAwesome](https://fontawesome.com/)
+* Form Control: [Formik](https://jaredpalmer.com/formik/docs/overview)
 * [Typescript](https://www.typescriptlang.org/)
 
 ### Linter
 * [ESlint](https://eslint.org/)
 * [Prettier](https://github.com/prettier/prettier)
 
-## Configuração e uso
+## Usage
 
-Instale todas as dependências do projeto através do yarn (ou npm):
+Install dependencies:
 
 ```sh
-yarn
+yarn (or npm i)
 ```
 
-Pronto! Suba o ambiente executando:
+Done! Start the service:
 
 ```sh
 yarn start
 ```
 
-## Estrutura do projeto
+## Project Structure
 
-* `src/` base de código da aplicação;
-* `src/services/api` configuração e custom hooks para integração com api;
-* `src/components` componentes separados em pastas com seus respectivos estilos (se houver) e index.js para importação default (facilita visualização no editor);
-* `src/pages/` componentes de primeiro nível em relação ao router;
-* `src/styles` usa a [arquitetura 7-1](https://sass-guidelin.es/#the-7-1-pattern) para organizar o código SASS.
+* `src/` code base;
+* `src/services/api` config and custom hook for data fetch;
+* `src/components` components isolated with its styling (if any) and index.ts for easier import and editor visualization;
+* `src/pages/` first level router components;
+* `src/styles` uses the [7-1 architecture](https://sass-guidelin.es/#the-7-1-pattern) to organize SASS code.
 
 ## Comandos
 
 ```sh
-# sobe a aplicação em modo de desenvolvimento
+# run the app
 yarn start
-# executa testes
+# run test
 yarn test
-# executa build do projeto com assets comprimidos e prontos para produção
+# build static assets
 yarn build 
 ```
